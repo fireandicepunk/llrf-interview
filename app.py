@@ -17,11 +17,7 @@ with st.sidebar:
 
 # -------------------------- 1. Project Overview --------------------------
 if menu == "Project Overview":
-    st.image(
-        "https://via.placeholder.com/800x400?text=LLRF+System+Diagram",
-        caption="200MHz RFQ Cavity LLRF System Block Diagram",
-        use_column_width=True
-    )
+    st.image("images/200MIlrf.PNG", caption="200MHz RFQ Cavity LLRF System Diagram", use_column_width=True)
     st.markdown("""
     ### Project Positioning
     This project designs a full-digital Low-Level RF (LLRF) system for the **200MHz RFQ accelerating cavity**,
