@@ -17,7 +17,7 @@ with st.sidebar:
 
 # -------------------------- 1. Project Overview --------------------------
 if menu == "Project Overview":
-    st.image("200Mllrf.PNG", caption="200MHz RFQ Cavity LLRF System Diagram", use_column_width=True)
+    # st.image("200MIlrf.PNG", caption="200MHz RFQ Cavity LLRF System Diagram", use_column_width=True)
     st.markdown("""
     ### Project Positioning
     This project designs a full-digital Low-Level RF (LLRF) system for the **200MHz RFQ accelerating cavity**,
@@ -25,7 +25,7 @@ if menu == "Project Overview":
     acting as the core control unit of the linear accelerator RF system.
 
     ### Core Values
-    - Break the 64KB cache limit of traditional LwIP, support high-bandwidth data return
+    - Implement interlock protection and feedforward algorithms to compensate for cavity voltage sag
     - Achieve sub-degree phase stability and 0.1% amplitude stability
     - Microsecond-level closed-loop response and fault protection
     """)
