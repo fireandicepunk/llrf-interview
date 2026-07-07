@@ -2,113 +2,114 @@ import streamlit as st
 import numpy as np
 import plotly.graph_objects as go
 
-# Ò³ÃæÅäÖÃ
-st.set_page_config(page_title="LLRFµÍµçÆ½ÏµÍ³-¸öÈËÏîÄ¿", layout="wide")
-st.title("200MHz RFQÇ»Ìå Ö±Ïß¼ÓËÙÆ÷µÍµçÆ½ÏµÍ³ LLRF")
-st.subheader("FPGA+16bit 133MSPS ¸ß¾«¶È·ùÏàÆµÂÊ±Õ»·¿ØÖÆ | ¸öÈËÏîÄ¿×÷Æ·¼¯")
+# Page config
+st.set_page_config(page_title="LLRF System - Personal Project", layout="wide")
+st.title("200MHz RFQ Cavity LLRF System")
+st.subheader("FPGA + 16bit 133MSPS High-Precision Amplitude-Phase-Frequency Closed-Loop Control")
 
-# ²à±ßÀ¸½»»¥²Ëµ¥
+# Sidebar navigation
 with st.sidebar:
-    st.title("”9Ü8 ÏîÄ¿µ¼º½")
+    st.title("ðŸ“‚ Project Navigation")
     menu = st.radio(
-        "Ñ¡Ôñ²é¿´ÄÚÈÝ",
-        ["ÏîÄ¿¼ò½é", "ÏµÍ³¹¹³É", "ºËÐÄÖ¸±ê", "¼¼ÊõÄÑµã", "ÎÒµÄ¹¤×÷", "ÐÔÄÜ·ÂÕæ"]
+        "Select content to view",
+        ["Project Overview", "System Architecture", "Key Metrics", "Technical Challenges", "My Contributions", "Performance Simulation"]
     )
 
-# -------------------------- 1. ÏîÄ¿¼ò½é --------------------------
-if menu == "ÏîÄ¿¼ò½é":
+# -------------------------- 1. Project Overview --------------------------
+if menu == "Project Overview":
     st.markdown("""
-    ### ÏîÄ¿¶¨Î»
-    ±¾ÏîÄ¿Îª**200MHz RFQ¼ÓËÙÇ»Ìå**Éè¼ÆÈ«Êý×ÖµÍµçÆ½¿ØÖÆÏµÍ³£¨LLRF£©£¬
-    ÊµÊ±ÎÈ¶¨¼ÓËÙ³¡**·ù¶È¡¢ÏàÎ»¡¢Ð³ÕñÆµÂÊ**£¬ÊÇÖ±Ïß¼ÓËÙÆ÷ÉäÆµÏµÍ³µÄºËÐÄ¿ØÖÆµ¥Ôª¡£
+    ### Project Positioning
+    This project designs a full-digital Low-Level RF (LLRF) system for the **200MHz RFQ accelerating cavity**,
+    which stabilizes the amplitude, phase, and resonant frequency of the accelerating field in real time,
+    acting as the core control unit of the linear accelerator RF system.
 
-    ### ºËÐÄ¼ÛÖµ
-    - Í»ÆÆ´«Í³LwIP 64KB»º´æÏÞÖÆ£¬Ö§³Ö´ó´ø¿íÊý¾Ý»Ø´«
-    - ÊµÏÖÑÇ¶È¼¶ÏàÎ»ÎÈ¶¨¡¢Ç§·ÖÖ®Ò»¼¶·ù¶ÈÎÈ¶¨
-    - Î¢Ãë¼¶±Õ»·ÏìÓ¦Óë¹ÊÕÏ±£»¤
+    ### Core Values
+    - Break the 64KB cache limit of traditional LwIP, support high-bandwidth data return
+    - Achieve sub-degree phase stability and 0.1% amplitude stability
+    - Microsecond-level closed-loop response and fault protection
     """)
 
-# -------------------------- 2. ÏµÍ³¹¹³É --------------------------
-elif menu == "ÏµÍ³¹¹³É":
-    st.markdown("### ”9æ9 ÏµÍ³Ó²¼þÓëÂß¼­×é³É")
+# -------------------------- 2. System Architecture --------------------------
+elif menu == "System Architecture":
+    st.markdown("### ðŸ”§ Hardware and Logic Composition")
     col1, col2 = st.columns(2)
     with col1:
-        st.info("**Ó²¼þµ¥Ôª**")
-        st.write("- Ç»ÌåÉäÆµ²ÉÑùÇ°¶Ë")
-        st.write("- 16bit 133MSPS ¸ßËÙADC²É¼¯")
-        st.write("- FPGA+RFSoCÊý×Ö´¦ÀíºËÐÄ")
-        st.write("- DAC¼¤ÀøÊä³öÓë¹¦ÂÊÇý¶¯")
-        st.write("- Ê±ÖÓÍ¬²½ÓëµÍÏàÔëLOÄ£¿é")
-        st.write("- ¹ý·ù/Ê§Ëø/¸ß×¤²¨±£»¤µ¥Ôª")
+        st.info("**Hardware Units**")
+        st.write("- Cavity RF sampling front-end")
+        st.write("- 16bit 133MSPS high-speed ADC acquisition")
+        st.write("- FPGA+RFSoC digital processing core")
+        st.write("- DAC excitation output and power drive")
+        st.write("- Clock synchronization and low-phase-noise LO module")
+        st.write("- Over-amplitude/loss-lock/high-VSWR protection unit")
     with col2:
-        st.success("**Ëã·¨ÓëÈí¼þ**")
-        st.write("- IQÕý½»½âµ÷Óë·ùÏà½âËã")
-        st.write("- Èý±Õ»·PID¿ØÖÆ£¨·ù/Ïà/Æµ£©")
-        st.write("- AFC×Ô¶¯ÆµÂÊ¸ú×Ù")
-        st.write("- Ê±ÐòÍ¬²½ÓëÂö³å¿ØÖÆ")
-        st.write("- ÉÏÎ»»ú¼à¿ØÓëÊý¾Ý»Ø´«")
+        st.success("**Algorithms and Software**")
+        st.write("- IQ quadrature demodulation and amplitude-phase calculation")
+        st.write("- Three closed-loop PID control (amplitude/phase/frequency)")
+        st.write("- AFC automatic frequency tracking")
+        st.write("- Timing synchronization and pulse control")
+        st.write("- Upper computer monitoring and data return")
 
-# -------------------------- 3. ºËÐÄÖ¸±ê --------------------------
-elif menu == "ºËÐÄÖ¸±ê":
-    st.markdown("### ”9Ý6 ¹Ø¼üÐÔÄÜÖ¸±ê£¨¿É½»»¥²é¿´£©")
+# -------------------------- 3. Key Metrics --------------------------
+elif menu == "Key Metrics":
+    st.markdown("### ðŸ“Š Key Performance Metrics")
     col1, col2, col3 = st.columns(3)
-    col1.metric("²ÉÑù¾«¶È", "16bit")
-    col2.metric("²ÉÑùÂÊ", "133 MSPS")
-    col3.metric("±Õ»·ÑÓ³Ù", "<1 ¦Ìs")
+    col1.metric("Sampling Precision", "16bit")
+    col2.metric("Sampling Rate", "133 MSPS")
+    col3.metric("Closed-loop Delay", "<1 Î¼s")
 
     col4, col5, col6 = st.columns(3)
-    col4.metric("·ù¶ÈÎÈ¶¨¶È", "¡À0.1% (100ppm)")
-    col5.metric("ÏàÎ»ÎÈ¶¨¶È", "¡À0.1¡ã")
-    col6.metric("ÆµÂÊ¸ú×Ù¾«¶È", "<10 Hz")
+    col4.metric("Amplitude Stability", "Â±0.1% (100ppm)")
+    col5.metric("Phase Stability", "Â±0.1Â°")
+    col6.metric("Frequency Tracking Precision", "<10 Hz")
 
-    st.markdown("**±£»¤ÏìÓ¦ <10¦Ìs | ±Õ»·´ø¿í >1MHz**")
+    st.markdown("**Protection Response <10Î¼s | Closed-loop Bandwidth >1MHz**")
 
-# -------------------------- 4. ¼¼ÊõÄÑµã --------------------------
-elif menu == "¼¼ÊõÄÑµã":
-    st.markdown("### 7²2„1‚5 ºËÐÄ¼¼ÊõÄÑµãÓë½â¾ö·½°¸")
-    with st.expander("200MHz ¸ß¾«¶È²ÉÑùÓëÐÅºÅÍêÕûÐÔ", expanded=True):
-        st.write("6¦1 ¸ßËÙADC/DAC×è¿¹Æ¥Åä¡¢PCB´®ÈÅÒÖÖÆ")
-        st.write("6¦1 IQÕý½»²»Æ½ºâÐ£Õý¡¢¾µÏñÒÖÖÆ")
-    with st.expander("¸ß´ø¿í¶à±Õ»·ñîºÏ¿ØÖÆ"):
-        st.write("6¦1 ·ùÏàÆµÈý±Õ»·½âñîÓëÇ°À¡²¹³¥")
-        st.write("6¦1 ÊøÁ÷¸ºÔØ¡¢ÎÂ¶ÈÆ¯ÒÆÊµÊ±ÒÖÖÆ")
-    with st.expander("Ç¿EMI»·¾³¿É¿¿ÐÔ"):
-        st.write("6¦1 ¸ß¹¦ÂÊÉäÆµ¸ÉÈÅ¸ôÀë")
-        st.write("6¦1 ¿ìËÙÁªËøÓë¹ÊÕÏÂ¼²¨")
-    with st.expander("Ç»ÌåÆµÆ«¸ú×Ù"):
-        st.write("6¦1 AFC+PZTµ÷Ð³Ð­Í¬¿ØÖÆ")
-        st.write("6¦1 ¶¯Ì¬Ð³ÕñµãËø¶¨")
+# -------------------------- 4. Technical Challenges --------------------------
+elif menu == "Technical Challenges":
+    st.markdown("### âš ï¸ Core Technical Challenges and Solutions")
+    with st.expander("200MHz High-Precision Sampling and Signal Integrity", expanded=True):
+        st.write("â€¢ High-speed ADC/DAC impedance matching, PCB crosstalk suppression")
+        st.write("â€¢ IQ quadrature imbalance correction, image rejection")
+    with st.expander("High-Bandwidth Multi-Closed-Loop Coupling Control"):
+        st.write("â€¢ Amplitude-phase-frequency three closed-loop decoupling and feedforward compensation")
+        st.write("â€¢ Real-time suppression of beam loading and temperature drift")
+    with st.expander("Reliability in Strong EMI Environment"):
+        st.write("â€¢ High-power RF interference isolation")
+        st.write("â€¢ Fast interlock and fault recording")
+    with st.expander("Cavity Frequency Offset Tracking"):
+        st.write("â€¢ AFC + PZT tuning cooperative control")
+        st.write("â€¢ Dynamic resonance point locking")
 
-# -------------------------- 5. ÎÒµÄ¹¤×÷ --------------------------
-elif menu == "ÎÒµÄ¹¤×÷":
-    st.markdown("### ”9Ó86¤9”9Ü1 ¸öÈË¸ºÔðÄÚÈÝ£¨Í»³öºËÐÄÄÜÁ¦£©")
-    st.success("**È«Á÷³Ì¶ÀÁ¢¸ºÔðÄ£¿é**")
-    st.write("7¼3 LLRFÊý×Ö¼Ü¹¹Éè¼ÆÓëFPGAÂß¼­ÊµÏÖ")
-    st.write("7¼3 ADC/DAC½Ó¿Ú¡¢IQ½âµ÷¡¢·ùÏà¼ÆËã")
-    st.write("7¼3 ·ù¶È+ÏàÎ»+ÆµÂÊÈý±Õ»·Ëã·¨¿ª·¢Óëµ÷ÊÔ")
-    st.write("7¼3 ÏµÍ³Áªµ÷¡¢ÏàÔëÓÅ»¯¡¢¿¹¸ÉÈÅ´¦Àí")
-    st.write("7¼3 Ö¸±ê²âÊÔÓëÑéÖ¤£¬Êä³öÎÈ¶¨¶È±¨¸æ")
+# -------------------------- 5. My Contributions --------------------------
+elif menu == "My Contributions":
+    st.markdown("### ðŸ‘¨â€ðŸ’» Personal Responsibilities")
+    st.success("**Full-Process Independent Modules**")
+    st.write("âœ… LLRF digital architecture design and FPGA logic implementation")
+    st.write("âœ… ADC/DAC interface, IQ demodulation, amplitude-phase calculation")
+    st.write("âœ… Amplitude+phase+frequency three closed-loop algorithm development and debugging")
+    st.write("âœ… System joint debugging, phase noise optimization, anti-interference processing")
+    st.write("âœ… Metric testing and verification, output stability report")
 
-    st.markdown("### ¸öÈËÄÜÁ¦×Ü½á")
-    st.write("6¦1 ¾«Í¨FPGA¸ßËÙÊý×ÖÐÅºÅ´¦ÀíÓëÊµÊ±¿ØÖÆ")
-    st.write("6¦1 ÕÆÎÕ¼ÓËÙÆ÷LLRFÏµÍ³Éè¼ÆÓë±Õ»·Ëã·¨")
-    st.write("6¦1 ¾ß±¸Ó²¼þÁªµ÷¡¢ÎÊÌâ¶¨Î»Óë¹¤³ÌÂäµØÄÜÁ¦")
+    st.markdown("### Personal Ability Summary")
+    st.write("â€¢ Proficient in FPGA high-speed digital signal processing and real-time control")
+    st.write("â€¢ Master accelerator LLRF system design and closed-loop algorithms")
+    st.write("â€¢ Possess hardware joint debugging, problem location and engineering implementation capabilities")
 
-# -------------------------- 6. ÐÔÄÜ·ÂÕæ£¨½»»¥Ê½Í¼±í£© --------------------------
-elif menu == "ÐÔÄÜ·ÂÕæ":
-    st.markdown("### ”9Ý4 ·ùÏàÎÈ¶¨¶È·ÂÕæÇúÏß£¨¿É½»»¥£©")
+# -------------------------- 6. Performance Simulation --------------------------
+elif menu == "Performance Simulation":
+    st.markdown("### ðŸ“ˆ Amplitude-Phase Stability Simulation Curve")
     t = np.linspace(0, 1, 1000)
-    amp = 1 + 0.001 * np.random.randn(len(t))  # ¡À0.1%²¨¶¯
-    phase = 0 + 0.1 * np.random.randn(len(t))   # ¡À0.1¡ã²¨¶¯
+    amp = 1 + 0.001 * np.random.randn(len(t))  # Â±0.1% fluctuation
+    phase = 0 + 0.1 * np.random.randn(len(t))   # Â±0.1Â° fluctuation
 
     fig = go.Figure()
-    fig.add_trace(go.Scatter(y=amp, name="·ù¶È¹éÒ»»¯", line=dict(color="#1f77b4")))
-    fig.add_trace(go.Scatter(y=phase, name="ÏàÎ»(¡ã)", line=dict(color="#ff7f0e"), yaxis="y2"))
+    fig.add_trace(go.Scatter(y=amp, name="Normalized Amplitude", line=dict(color="#1f77b4")))
+    fig.add_trace(go.Scatter(y=phase, name="Phase (Â°)", line=dict(color="#ff7f0e"), yaxis="y2"))
     fig.update_layout(
-        yaxis=dict(title="·ù¶È"),
-        yaxis2=dict(title="ÏàÎ»(¡ã)", overlaying="y", side="right"),
+        yaxis=dict(title="Amplitude"),
+        yaxis2=dict(title="Phase (Â°)", overlaying="y", side="right"),
         height=400, template="plotly_white"
     )
     st.plotly_chart(fig, use_container_width=True)
 
-    st.info("·ÂÕæÐ§¹û£º·ù¶ÈÎÈ¶¨¶È¡À0.1%£¬ÏàÎ»ÎÈ¶¨¶È¡À0.1¡ã£¬·ûºÏÏîÄ¿Ö¸±ê")
+    st.info("Simulation result: Amplitude stability Â±0.1%, phase stability Â±0.1Â°, meeting project requirements")
